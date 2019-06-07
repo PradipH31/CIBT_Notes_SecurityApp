@@ -22,9 +22,9 @@ public class LoginController {
     public String index() {
         return "login/index";
     }
-    
+
     @GetMapping(value = "/logout")
-    public String logout(HttpServletRequest request){
+    public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
         return "redirect:/login";
     }

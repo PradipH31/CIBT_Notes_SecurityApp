@@ -30,6 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/").permitAll()
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll();
     }
@@ -46,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .withUser("admin")
 //                .password(bCryptPasswordEncoder().encode("admin1234"))
 //                .roles("USER");
-        String userSQL = "sleect username,password,active from users where username=?";
+        String userSQL = "select username,password,active from users where username=?";
         String roleSQL = "select u.username, r.role_name from users u"
                 + " inner join user_roles ur on(u.id=ur.user_id)"
                 + " inner join roles r on(ur.role_id=r.id)"
@@ -59,7 +60,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }

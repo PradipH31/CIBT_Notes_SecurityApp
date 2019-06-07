@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value = "/admin")
-public class DahsboardController {
+public class DashboardController {
     @GetMapping
     @ResponseBody
     public String index(){
