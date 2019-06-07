@@ -5,10 +5,14 @@
  */
 package com.cibt.web.configuration;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 /**
  *
  * @author HP B&O
  */
-public class SystemConfiguration {
+@Configuration
+public class SystemConfiguration implements WebMvcConfigurer{
     
 }
