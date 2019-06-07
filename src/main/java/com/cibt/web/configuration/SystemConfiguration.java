@@ -6,6 +6,7 @@
 package com.cibt.web.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -13,6 +14,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author HP B&O
  */
 @Configuration
-public class SystemConfiguration implements WebMvcConfigurer{
-    
+public class SystemConfiguration implements WebMvcConfigurer {
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("index");
+    }
+
 }
