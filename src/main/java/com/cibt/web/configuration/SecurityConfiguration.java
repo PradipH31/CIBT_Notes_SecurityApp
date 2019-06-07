@@ -5,6 +5,8 @@
  */
 package com.cibt.web.configuration;
 
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,6 +24,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private DataSource dataSource;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/").permitAll()
@@ -36,14 +41,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(bCryptPasswordEncoder())
-                .withUser("admin")
-                .password(bCryptPasswordEncoder().encode("admin1234"))
-                .roles("USER");
+//        auth.inMemoryAuthentication()
+//                .passwordEncoder(bCryptPasswordEncoder())
+//                .withUser("admin")
+//                .password(bCryptPasswordEncoder().encode("admin1234"))
+//                .roles("USER");
+        String userSQL = "sleect username,password,active from users where username=?";
+        String roleSQL = "select u.username, r.role_name from users u"
+                + " inner join user_roles ur on(u.id=ur.user_id)"
+                + " inner join roles r on(ur.role_id=r.id)"
+                + " where u.username=?";
+        auth.jdbcAuthentication()
+                .usersByUsernameQuery(userSQL)
+                .authoritiesByUsernameQuery(roleSQL)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
+
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
