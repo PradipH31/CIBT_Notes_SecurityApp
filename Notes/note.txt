@@ -1,1 +1,9 @@
 Maven -> New Web 
+
+Parent:
+	spring-boot-starter-parent(org.springframework.boot)2.1.5
+Dependencies:
+	spring-boot-starter-web->''
+	spring-boot-starter-thymeleaf->''
+	spring-boot-devtools->''
+	spring-boot-starter-security->''
