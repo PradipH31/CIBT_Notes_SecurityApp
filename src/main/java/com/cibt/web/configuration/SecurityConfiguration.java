@@ -5,10 +5,16 @@
  */
 package com.cibt.web.configuration;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
 /**
  *
  * @author HP B&O
  */
-public class SecurityConfiguration {
-    
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
 }
